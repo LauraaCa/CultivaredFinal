@@ -1,0 +1,63 @@
+{% extends 'vendedor/vendedorBase.html' %}
+{% block body %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="https://bootswatch.com/5/litera/bootstrap.min.css"> 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/crudPro.css') }}">
+
+{% endblock %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+           
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Código</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Imagen</th>
+                                <th scope="col">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for producto in produ %}
+                                <tr>
+                                    <td>{{ producto[0] }}</td>  <!-- id -->
+                                    <td>{{ producto[1] }}</td>  <!-- nombre -->
+                                    <td>{{ producto[2] }}</td>  <!-- descripcion -->
+                                    <td>{{ producto[4] }}</td>  <!-- cantidad -->
+                                    <td>${{ producto[5] }}</td>  <!-- precio -->
+                                    <td>
+                                        <img src="{{ url_for('vendedor_blueprint.imagen_producto', producto_id=producto[0]) }}"
+                                        alt="Imagen del producto" width="200" height="200"
+                                        onerror="this.onerror=null; this.src='/static/img/default.png';">
+                                   
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('vendedor_blueprint.editar_producto', id=producto[0]) }}" title="Editar" class="btn btn-primary btn-sm">Editar</a>
+                                        <form action="{{ url_for('vendedor_blueprint.eliminar', id=producto[0]) }}" method="POST" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que quieres eliminar este producto?')">
+                                                <span class="ms-2">Eliminar</span>
+                                            </button>
+                                        </form>
+                                            </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+                    </table>
+                    <a href="/VENDEDOR/RegistroProductos" class="btn btn-secondary btn-lg" title="Agregar">Agregar Producto</a>
+                    <a href="/VENDEDOR" class="btn btn-secondary btn-lg">Atrás</a>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% extends 'administrador/baseAdmin.html' %}
+{% block body %}
+
+<!-- Enlace a CSS -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminperfil.css') }}">
+<style>
+.custom-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<div class="container d-flex flex-column align-items-center justify-content-start" style="min-height: 80vh;">
+    <h1 id="panel-title" class="text-center mb-4" style="margin-top: 80px;">ESTADÍSTICAS</h1>
+
+  <div class="row justify-content-center mt-4">
+    
+    <!-- Tarjeta de Total de Usuarios -->
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card text-center custom-card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <h5 class="card-title">USUARIOS</h5>
+          <p class="display-6 text-primary">{{ num_usuarios }}</p>
+          <small>Vendedores: {{ num_vendedores }}, Compradores: {{ num_compradores }}</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Total de Transacciones -->
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card text-center custom-card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <h5 class="card-title">PEDIDOS</h5>
+          <p class="display-6 text-success">{{ num_transacciones }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Total de Productos -->
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card text-center custom-card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <h5 class="card-title">PRODUCTOS</h5>
+          <p class="display-6 text-warning">{{ num_productos }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Productos Más Vendidos y Menos Vendidos -->
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+      <div class="card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <h5 class="card-title text-center">🔥MÁS VENDIDOS</h5>
+          <ul class="list-group">
+            {% for producto in productos_mas_vendidos %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ producto.nombre }}
+                <span class="badge bg-success rounded-pill">{{ producto.cantidad }} ventas</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card shadow-lg p-3 bg-white rounded">
+        <div class="card-body">
+          <h5 class="card-title text-center">⚠️ MENOS VENDIDOS</h5>
+          <ul class="list-group">
+            {% for producto in productos_menos_vendidos %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ producto.nombre }}
+                <span class="badge bg-danger rounded-pill">{{ producto.cantidad }} venta</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 📈 Gráficos con Chart.js -->
+<div class="container mt-5">
+  <h2 class="text-center">📦 STOCKS</h2>
+  <canvas id="productosChart" style="max-height: 400px;"></canvas>
+</div>
+
+<!-- Incluir Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  let productos_stock = JSON.parse('{{ productos_stock | tojson | safe }}');
+
+  if (productos_stock.length > 0) {
+    let nombresProductos = productos_stock.map(p => p.nombre);
+    let cantidadesProductos = productos_stock.map(p => p.cantidad);
+
+    new Chart(document.getElementById("productosChart"), {
+      type: 'bar',
+      data: {
+        labels: nombresProductos,
+        datasets: [{
+          label: 'Stock de Productos',
+          data: cantidadesProductos,
+          backgroundColor: 'rgba(255, 99, 132, 0.6)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  }
+});
+</script>
+
+{% endblock %}

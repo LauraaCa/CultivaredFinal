@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% extends 'administrador/baseAdmin.html' %}
+
+{% block body %}
+<!-- Enlace a tu CSS (adminperfil.css) -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminperfil.css') }}">
+
+<div class="container mt-5">
+  <!-- Título -->
+  <h1 class="text-center" id="panel-title">Panel de control</h1>
+
+  <div class="row justify-content-center mt-4">
+
+    <!--Estadísticas -->
+   <div class="col-md-3 col-sm-6 mb-4">
+    <div class="row justify-content-center mt-5"></div>
+    <div class="card text-center custom-card">
+      <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+      <!-- Imagen -->
+       <img 
+        src="{{ url_for('static', filename='img/estadisticas.png') }}" 
+        alt="Icono Reporte" 
+        class="card-img-top mx-auto d-block icono-color"
+        style="width: 80px; margin-top: 20px;"
+       >  
+      <div class="card-body">
+        <h5 class="card-title">Estadisticas</h5>
+        <a href="/ADMINISTRADOR/estadisticas" class="btn btn-secondary mt-2">Mostrar</a>
+      </div>
+    </div>
+  </div>
+
+   <!--Reportes -->
+   <div class="col-md-3 col-sm-6 mb-4">
+    <div class="row justify-content-center mt-5"></div>
+    <div class="card text-center custom-card">
+      <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+      <!-- Imagen -->
+       <img 
+        src="{{ url_for('static', filename='img/reportes.png') }}" 
+        alt="Icono Reporte" 
+        class="card-img-top mx-auto d-block icono-color"
+        style="width: 80px; margin-top: 20px;"
+       >  
+      <div class="card-body">
+        <h5 class="card-title">Reportes</h5>
+        <a href="/ADMINISTRADOR/generar_pdf" class="btn btn-secondary mt-2">Mostrar</a>
+      </div>
+    </div>
+  </div>
+
+    <!--Transacciones -->
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="row justify-content-center mt-5"></div>
+      <div class="card text-center custom-card">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+        <!-- Imagen -->
+         <img 
+          src="{{ url_for('static', filename='img/transacciones.png') }}" 
+          alt="Icono Transacciones" 
+          class="card-img-top mx-auto d-block icono-color"
+          style="width: 80px; margin-top: 20px;"
+         >  
+        <div class="card-body">
+          <h5 class="card-title">Transacciones</h5>
+          <a href="/ADMINISTRADOR/transacciones" class="btn btn-secondary mt-2">Mostrar</a>
+        </div>
+      </div>
+    </div>
+
+    <!--Productos -->
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="row justify-content-center mt-5"></div>
+      <div class="card text-center custom-card">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+        <!-- Imagen -->
+         <img 
+          src="{{ url_for('static', filename='img/productos.png') }}" 
+          alt="Icono Productos" 
+          class="card-img-top mx-auto d-block icono-color"
+          style="width: 80px; margin-top: 20px;"
+         >
+        <div class="card-body">
+          <h5 class="card-title">Productos</h5>
+          <a href="/ADMINISTRADOR/productos" class="btn btn-secondary mt-2">Mostrar</a>
+        </div>
+      </div>
+    </div>
+
+    <!--Gestores -->
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="row justify-content-center mt-5"></div>
+      <div class="card text-center custom-card">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+        <!-- Imagen -->
+         <img 
+          src="{{ url_for('static', filename='img/gestores.png') }}" 
+          alt="Icono Gestores" 
+          class="card-img-top mx-auto d-block icono-color"
+          style="width: 80px; margin-top: 20px;"
+         >
+        <div class="card-body">
+          <h5 class="card-title">Gestores</h5>
+          <a href="/ADMINISTRADOR/gestores" class="btn btn-secondary mt-2">Mostrar</a>
+        </div>
+      </div>
+    </div>
+
+    <!--Usuarios -->
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="row justify-content-center mt-5"></div>
+      <div class="card text-center custom-card">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center"></div>
+        <!-- Imagen -->
+         <img 
+         src="{{ url_for('static', filename='img/usuariosAdm.png') }}" 
+         alt="Icono Usuarios" 
+         class="card-img-top mx-auto d-block icono-color"
+         style="width: 80px; margin-top: 20px;"
+         >
+        <div class="card-body">
+          <h5 class="card-title">Usuarios</h5>
+          <a href="/ADMINISTRADOR/usuarios" class="btn btn-secondary mt-2">Mostrar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

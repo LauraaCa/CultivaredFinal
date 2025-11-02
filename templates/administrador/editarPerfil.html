@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% extends 'administrador/baseAdmin.html' %}
+
+{% block body %}
+<!-- Enlazamos tu CSS principal -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminperfil.css') }}">
+
+<!-- Contenedor que identifica esta vista de edición -->
+<div class="container mt-5 editar-perfil">
+  <h1 class="text-center" id="panel-title">Editar mis datos personales</h1>
+
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <!-- Tarjeta con la clase custom-card -->
+      <div class="card custom-card p-4">
+        
+        <!-- Formulario de edición -->
+        <form method="POST" action="/ADMINISTRADOR/editar/{{ user[0] }}">
+          <!-- Campo ID oculto -->
+          <input type="hidden" name="id" value="{{ user[0] }}">
+
+          <!-- Fila 1: Identificación y Teléfono -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Identificaci&oacute;n</label>
+              <input type="text" class="form-control" value="{{ user[0] }}" readonly>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Tel&eacute;fono</label>
+              <input 
+                type="text" 
+                name="telefono" 
+                class="form-control"
+                value="{{ user[5] }}"
+              >
+            </div>                     
+          </div>
+
+          <!-- Fila 2: Nombres y Apellidos -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Nombres</label>
+              <input 
+                type="text" 
+                name="nombre" 
+                class="form-control"
+                value="{{ user[1] }}"
+              >
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Apellidos</label>
+              <input 
+                type="text" 
+                name="apellido" 
+                class="form-control"
+                value="{{ user[2] }}"
+              >
+            </div>
+          </div>
+
+          <!-- Fila 3: Género y correo -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">G&eacute;nero</label>
+              <input 
+                type="text" 
+                name="genero" 
+                class="form-control"
+                value="{{ user[3] }}"
+              >
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Correo</label>
+              <input 
+                type="email" 
+                name="email" 
+                class="form-control"
+                value="{{ user[4] }}"
+              >
+            </div>
+          </div>
+
+          <!-- Fila 4: Contraseña y Confirmar Contraseña -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="form-label">Contrase&ntilde;a</label>
+              <input 
+                type="password" 
+                name="contrasena" 
+                class="form-control" 
+                placeholder="*******"
+              >
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Confirmar contrase&ntilde;a</label>
+              <input 
+                type="password" 
+                name="confirmar_contrasena" 
+                class="form-control" 
+                placeholder="*******"
+              >
+            </div>
+          </div>
+
+          <!-- Botón Guardar centrado -->
+          <div class="d-flex justify-content-center mt-4">
+            <button type="submit" class="btn btn-secondary px-5">Guardar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
