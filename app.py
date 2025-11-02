@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 from config import Config
 from models import db
 
@@ -17,6 +17,13 @@ with app.app_context():
     from models import Usuarios, Producto, Transaccion, Carrito, ItemsCarrito, Pedido, ItemPedido
     db.create_all()
     print("✅ Tablas creadas o actualizadas en la base de datos.")
+
+@app.route('/')
+def home():
+    # Cambia 'autenticacion.main' y 'login' según el nombre del blueprint y función que tengas
+    return redirect(url_for('autenticacion_blueprint.log')) # si quieres ir al índice del blueprint
+    # o, si tienes una vista específica como login:
+    # return redirect(url_for('autenticacion.login'))
 
 
 @app.errorhandler(404)
