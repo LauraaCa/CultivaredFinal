@@ -1,8 +1,7 @@
 import psycopg2
 import os
 
-# Configuración de conexión a la base de datos
-DB_CONFIG = {
+LOCAL_DB_CONFIG = {
     "dbname": "cultivared",
     "user": "laura",
     "password": "12345",
@@ -10,31 +9,30 @@ DB_CONFIG = {
     "port": "5432"
 }
 
+RENDER_INTERNAL_URL = "postgresql://laura:7amRTA1rXNjJEATgymzFyg2FEdY3IS91@dpg-d43t5rgdl3ps73a96iqg-a/cultivared_postgresql"
+
 class Config:
-    # Construimos la URL a partir del diccionario DB_CONFIG
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgresql://{DB_CONFIG['user']}:{DB_CONFIG['password']}@"
-        f"{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['dbname']}"
+    
+    SQLALCHEMY_DATABASE_URI = os.getenv(
+        "DATABASE_URL",
+        f"postgresql://{LOCAL_DB_CONFIG['user']}:{LOCAL_DB_CONFIG['password']}@"
+        f"{LOCAL_DB_CONFIG['host']}:{LOCAL_DB_CONFIG['port']}/{LOCAL_DB_CONFIG['dbname']}"
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = os.getenv("SECRET_KEY", "clave_secreta_segura")
 
 
-# Función para obtener conexión directa con psycopg2
+# --- Función para obtener conexión manual con psycopg2 ---
 def get_connection():
     try:
-        return psycopg2.connect(**DB_CONFIG)
+        # Usa DATABASE_URL si existe (Render), si no usa la local
+        db_url = os.getenv("DATABASE_URL")
+        if db_url:
+            return psycopg2.connect(db_url)
+        else:
+            return psycopg2.connect(**LOCAL_DB_CONFIG)
     except Exception as e:
-        print("Error de conexión:", e)
+        print("❌ Error de conexión:", e)
         return None
 
 
-# Probar conexión directa (opcional)
-if __name__ == "__main__":
-    conn = get_connection()
-    if conn:
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT version();")
-            db_version = cursor.fetchone()
-            print("✅ Conectado a:", db_version)
-        conn.close()
